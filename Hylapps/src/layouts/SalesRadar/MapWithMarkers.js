@@ -94,6 +94,9 @@ const MapWithMarkers = ({ vessels, selectedVessel }) => {
   };
 
   useEffect(() => {
+
+    console.log(selectedVessel);
+    
     if (map) {
       if (!markerClusterGroupRef.current) {
         markerClusterGroupRef.current = L.markerClusterGroup({
@@ -101,7 +104,7 @@ const MapWithMarkers = ({ vessels, selectedVessel }) => {
         });
         map.addLayer(markerClusterGroupRef.current);
       }
-
+      console.log(vessels);
       vessels.forEach((vessel) => {
         const key = vessel.AIS.NAME || `${vessel.AIS.LATITUDE}-${vessel.AIS.LONGITUDE}`;
         if (!markersRef.current[key]) {
@@ -192,12 +195,10 @@ const MapWithMarkers = ({ vessels, selectedVessel }) => {
       
     }
 
-
-  
-    
-    
   }, [map, vessels, selectedVessel]);
 
+
+ 
   return null;
 };
 
