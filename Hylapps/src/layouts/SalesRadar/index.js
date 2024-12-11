@@ -45,7 +45,7 @@ function Geofence() {
 
   const handleRowClick = (vessel) => {
     console.log('Row click event received with vessel:', vessel); // Log received vessel
-    const selected = vessels.find(v => v.name === vessel.name);
+    const selected = vessels.find(v => v.AIS.NAME === vessel.AIS.NAME);
     if (selected) {
       setSelectedVessel(selected);
       console.log("Selected vessel:", selected);
@@ -64,12 +64,12 @@ function Geofence() {
 
   const calculateMapCenter = () => {
     if (vessels.length === 0) return [0, 0];
-    const latSum = vessels.reduce((sum, vessel) => sum + vessel.lat, 0);
-    const lngSum = vessels.reduce((sum, vessel) => sum + vessel.lng, 0);
+    const latSum = vessels.reduce((sum, vessel) => sum + vessel.AIS.LATITUDE, 0);
+    const lngSum = vessels.reduce((sum, vessel) => sum + vessel.AIS.LONGITUDE, 0);
     return [latSum / vessels.length, lngSum / vessels.length];
   };
 
-  const center = selectedVessel ? [selectedVessel.lat, selectedVessel.lng] : calculateMapCenter();
+  const center = selectedVessel ? [selectedVessel.AIS.LATITUDE, selectedVessel.AIS.LONGITUDE] : calculateMapCenter();
   const zoom = selectedVessel ? 10 : 6;
 
  
@@ -321,7 +321,7 @@ useEffect(() => {
     setNotifications((prev) => [
       ...prev,
       {
-        title: `${vessel.name} has entered ${message.title}`,
+        title: `${vessel.AIS.NAME} has entered ${message.title}`,
         date: new Date().toLocaleTimeString(),
         image: <img src={team2} alt="vessel" />,
       }
